@@ -45,6 +45,9 @@ public class DisplayBankAccountDetailsImpl implements BankAccountDetailsService 
     @Autowired
     private TransactionRepo transactionRepo;
 
+    @Autowired
+    OTPUtility utility;
+
     @Override
     public List<BankAccountDTO> listBankAccountDetailsViaMobileNo(Long mobileNo){
             return bankAccountRepo.findAllByMobile(mobileNo)
@@ -130,24 +133,25 @@ public class DisplayBankAccountDetailsImpl implements BankAccountDetailsService 
         return false;
     }
 
-    public Boolean checkAccount(List<BankAccountEntity> bankAccountEntities,Long account){
-        for(BankAccountEntity entity:bankAccountEntities){
+    public Boolean checkAccount(List<BankAccountEntity> bankAccountEntities,Long account) {
+        for (BankAccountEntity entity : bankAccountEntities) {
             System.out.println(entity.getAccountNumber());
             System.out.println(account);
-            if(entity.getAccountNumber().equals(account)){
+            if (entity.getAccountNumber().equals(account)) {
                 return true;
             }
         }
         return false;
-    OTPUtility utility;
-
-    @Override
-    public List<BankAccountDTO> listBankAccountDetailsViaMobileNo(Long mobileNo) {
-        return bankAccountRepo.findByMobileNumber(mobileNo)
-                .parallelStream()
-                .map(e -> new BankAccountDTO(e.getAccountNumber(), e.getBankName(), e.getBalance(), e.getAccountType(), e.getIfscCode(), e.getOpeningDate(), e.getMobileNumber()))
-                .collect(Collectors.toList());
     }
+
+
+//    @Override
+//    public List<BankAccountDTO> listBankAccountDetailsViaMobileNo(Long mobileNo) {
+//        return bankAccountRepo.findAllByMobile(mobileNo)
+//                .parallelStream()
+//                .map(e -> new BankAccountDTO(e.getAccountNumber(), e.getBankName(), e.getBalance(), e.getAccountType(), e.getIfscCode(), e.getOpeningDate(), e.getMobileNumber()))
+//                .collect(Collectors.toList());
+//    }
 
     @Override
     public String createAccount(BankAccountDTO accountDTO) throws MethodArgumentNotValidException {
@@ -160,7 +164,7 @@ public class DisplayBankAccountDetailsImpl implements BankAccountDetailsService 
 
         bankAccount.setOpeningDate(Date.valueOf(LocalDate.now()));
 
-        List<BankAccountDTO> accounts = bankAccountRepo.findByMobileNumber(accountDTO.getMobileNumber());
+        List<BankAccountDTO> accounts = bankAccountRepo.findAllByMobile(accountDTO.getMobileNumber());
         List<FieldError> fieldErrors = new ArrayList<>();
         fieldErrors.add(new FieldError("account", "account type", "same number and account name already exist"));
         for (BankAccountDTO account : accounts) {
@@ -177,14 +181,14 @@ public class DisplayBankAccountDetailsImpl implements BankAccountDetailsService 
     }
 
     public String linkAccount(LinkingAcountDTO accountDTO, Long mobileNumber) throws InfyMeMobileException {
-        List<BankAccountDTO> accounts = bankAccountRepo.findByMobileNumber(mobileNumber);
+        List<BankAccountDTO> accounts = bankAccountRepo.findAllByMobile(mobileNumber);
         if (accounts.size() == 0) {
-            throw new InfyMeMobileException(HttpStatus.OK.toString(), ExceptionConstants.NO_ACCOUNTS_FOUND.toString());
+            throw new InfyMeMobileException(HttpStatus.OK.toString(), ExceptionConstants.NO_ACCOUNTS_FOUND.getMessage());
         }
         String ifExists = digitalBankAccountRepo.findExists(accountDTO.getAccountNumber(), mobileNumber);
 
-        if (ifExists == null && ifExists.length() != 0) {
-            throw new InfyMeMobileException(HttpStatus.OK.toString(), ExceptionConstants.ACCOUNT_IS_LINKED.toString());
+        if (ifExists != null && ifExists.length() != 0 ) {
+            throw new InfyMeMobileException(HttpStatus.OK.toString(), ExceptionConstants.ACCOUNT_IS_LINKED.getMessage());
 
         }
 
@@ -213,16 +217,16 @@ public class DisplayBankAccountDetailsImpl implements BankAccountDetailsService 
 
     public String linkAccountWithOTP(LinkingAcountDTO accountDTO, Long mobileNumber) throws InfyMeMobileException {
         if (!accountDTO.getOtp().equals(utility.sendOTP())) {
-            throw new InfyMeMobileException(HttpStatus.OK.toString(), ExceptionConstants.AUTHENTICATION_FAILED.toString());
+            throw new InfyMeMobileException(HttpStatus.OK.toString(), ExceptionConstants.AUTHENTICATION_FAILED.getMessage());
         }
         String ifExists = digitalBankAccountRepo.findExists(accountDTO.getAccountNumber(), mobileNumber);
         if (ifExists != null && ifExists.length() != 0) {
-            throw new InfyMeMobileException(HttpStatus.OK.toString(), ExceptionConstants.ACCOUNT_IS_LINKED.toString());
+            throw new InfyMeMobileException(HttpStatus.OK.toString(), ExceptionConstants.ACCOUNT_IS_LINKED.getMessage());
 
         }
-        List<BankAccountDTO> accounts = bankAccountRepo.findByMobileNumber(mobileNumber);
+        List<BankAccountDTO> accounts = bankAccountRepo.findAllByMobile(mobileNumber);
         if (accounts.size() == 0) {
-            throw new InfyMeMobileException(HttpStatus.OK.toString(), ExceptionConstants.NO_ACCOUNTS_FOUND.toString());
+            throw new InfyMeMobileException(HttpStatus.OK.toString(), ExceptionConstants.NO_ACCOUNTS_FOUND.getMessage());
         }
 
         for (BankAccountDTO account : accounts) {

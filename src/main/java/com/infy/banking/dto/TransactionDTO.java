@@ -8,7 +8,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class TransactionDTO {
     Integer transactionId;
@@ -90,6 +89,18 @@ public class TransactionDTO {
     }
 
     public void setSenderAccountNumber(Long senderAccountNumber) {
+        this.senderAccountNumber = senderAccountNumber;
+    }
+
+    public TransactionDTO(Integer transactionId, String modeOfTransaction, Long paidTo, Long receiverAccountNumber, Double amount, Timestamp transactionDateTime, String remarks, Long paidFrom, Long senderAccountNumber) {
+        this.transactionId = transactionId;
+        this.modeOfTransaction = modeOfTransaction;
+        this.paidTo = paidTo;
+        this.receiverAccountNumber = receiverAccountNumber;
+        this.amount = amount;
+        this.transactionDateTime = transactionDateTime;
+        this.remarks = remarks;
+        this.paidFrom = paidFrom;
         this.senderAccountNumber = senderAccountNumber;
     }
 }

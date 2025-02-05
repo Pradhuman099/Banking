@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface TransactionRepo  extends JpaRepository<TransactionEntity,Integer> {
 
-    @Query(value = "select * from public.transaction where mobile_number=9999999999",nativeQuery = true)
+    @Query(value = "select * from public.transaction where paid_to=?1 or paid_from=?1",nativeQuery = true)
     List<TransactionDTO> findTransactionsByMobileNumber(Long mobileNo);
 }

@@ -59,7 +59,7 @@ public class BankAccountDetailsController {
     }
 
     @GetMapping(value="/accounts/statement/{mobileNo}")
-    public ResponseEntity<List<TransactionDTO>> accountStatement( Long mobileNo) throws InfyMeMobileException {
+    public ResponseEntity<List<TransactionDTO>> accountStatement(@PathVariable Long mobileNo) throws InfyMeMobileException {
         List<TransactionDTO> result= bankAccountDetailsService.accountStatement(mobileNo);
         if(result.size()!=0) {
             return new ResponseEntity<>(result, HttpStatus.OK);
