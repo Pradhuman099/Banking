@@ -29,7 +29,7 @@ public class InfyMeDigitalBankingGlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<String> handleNullPointerException(MethodArgumentNotValidException ma) {
 
-        return new ResponseEntity<String>(ma.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<String>(ma.getBindingResult().getFieldError().getDefaultMessage().toString(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)

@@ -12,5 +12,5 @@ import java.util.List;
 public interface BankAccountRepo  extends JpaRepository<BankAccountEntity,Long> {
 
     @Query(value="select * from public.bank_account where mobile_number=?1",nativeQuery = true)
-    List<BankAccountDTO> findAll(Long mobilNo);
+    List<BankAccountDTO> findByMobileNumber(Long mobilNo);
 }
