@@ -1,5 +1,7 @@
 package com.infy.banking.enums;
 
+import java.util.ResourceBundle;
+
 public enum ExceptionConstants {
     SERVER_ERROR("server.invalid"),
     AUTHENTICATION_FAILED("authentication.failed"),
@@ -12,9 +14,16 @@ public enum ExceptionConstants {
     NO_ACTIVE_TRANSACTIONS("no.active.transactions");
 
     private final String type;
+    private static final ResourceBundle BUNDLE= ResourceBundle.getBundle("messages");
 
     private ExceptionConstants(String type) {
         this.type = type;
+    }
+    public String getMessage(){
+        return BUNDLE.getString(type);
+    }
+    public String getMessage(Object... args){
+        return String.format(BUNDLE.getString(type),args);
     }
 
     @Override
