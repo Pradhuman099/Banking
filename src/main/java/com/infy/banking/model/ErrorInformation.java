@@ -1,13 +1,19 @@
 package com.infy.banking.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ErrorInformation {
 
     String errorMessage;
@@ -20,20 +26,20 @@ public class ErrorInformation {
         return errorMessage;
     }
 
-    public Integer getErrorCode() {
-        return errorCode;
-    }
-
-    public LocalDateTime getErrorTimeStamp() {
-        return errorTimeStamp;
-    }
-
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
 
+    public Integer getErrorCode() {
+        return errorCode;
+    }
+
     public void setErrorCode(Integer errorCode) {
         this.errorCode = errorCode;
+    }
+
+    public LocalDateTime getErrorTimeStamp() {
+        return errorTimeStamp;
     }
 
     public void setErrorTimeStamp(LocalDateTime errorTimeStamp) {

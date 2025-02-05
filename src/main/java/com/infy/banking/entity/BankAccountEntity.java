@@ -12,7 +12,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Date;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "bank_account",schema = "public")
@@ -47,52 +46,52 @@ public class BankAccountEntity {
         return accountNumber;
     }
 
-    public String getBankName() {
-        return bankName;
-    }
-
-    public Double getBalance() {
-        return balance;
-    }
-
-    public String getAccountType() {
-        return accountType;
-    }
-
-    public String getIfscCode() {
-        return ifscCode;
-    }
-
-    public Date getOpeningDate() {
-        return openingDate;
-    }
-
-    public Long getMobileNumber() {
-        return mobileNumber;
-    }
-
     public void setAccountNumber(Long accountNumber) {
         this.accountNumber = accountNumber;
+    }
+
+    public String getBankName() {
+        return bankName;
     }
 
     public void setBankName(String bankName) {
         this.bankName = bankName;
     }
 
+    public Double getBalance() {
+        return balance;
+    }
+
     public void setBalance(Double balance) {
         this.balance = balance;
+    }
+
+    public String getAccountType() {
+        return accountType;
     }
 
     public void setAccountType(String accountType) {
         this.accountType = accountType;
     }
 
+    public String getIfscCode() {
+        return ifscCode;
+    }
+
     public void setIfscCode(String ifscCode) {
         this.ifscCode = ifscCode;
     }
 
+    public Date getOpeningDate() {
+        return openingDate;
+    }
+
     public void setOpeningDate(Date openingDate) {
         this.openingDate = openingDate;
+    }
+
+    public Long getMobileNumber() {
+        return mobileNumber;
     }
 
     public void setMobileNumber(Long mobileNumber) {

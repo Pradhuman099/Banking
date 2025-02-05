@@ -29,7 +29,7 @@ public class BankAccountDTO {
     @Size(min=1, max=15, message="the minimum length of ifsc code should be 1, and the maximum length should be 15")
     String ifscCode;
 
-    @Past(message="Opening date must be a past Date")
+    @Past(message="Must be a past Date")
     Date openingDate;
 
     @NotNull(message="Mobile number cannot be null")
