@@ -10,6 +10,7 @@ public enum ExceptionConstants {
     NO_USERS_FOUND("no.users.found"),
     NO_ACCOUNTS_FOUND("no.account.found"),
     NO_ACCOUNT_IS_LINKED("no.account.is.linked"),
+    ACCOUNT_IS_LINKED("account.is.linked"),
     INSUFFICIENT_FUNDS("insufficient.funds"),
     NO_ACTIVE_TRANSACTIONS("no.active.transactions");
 

@@ -8,16 +8,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Date;
 
 @Entity
 @Table(name = "bank_account",schema = "public")
-@Data
+@Getter
+@Setter
 public class BankAccountEntity {
     @Id
     @SequenceGenerator(name = "BANK_ACCOUNT_ID_GENERATOR", sequenceName = "bank_account_seq", allocationSize = 1, schema = "public")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BANK_ACCOUNT_GENERATOR")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BANK_ACCOUNT_ID_GENERATOR")
     @Column(name="account_number")
     Long accountNumber;
 

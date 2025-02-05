@@ -4,8 +4,10 @@ import com.infy.banking.dto.BankAccountDTO;
 import com.infy.banking.dto.TransactionDTO;
 import com.infy.banking.enums.ExceptionConstants;
 import com.infy.banking.exceptions.InfyMeDigitalBankingGlobalExceptionHandler;
+import com.infy.banking.dto.LinkingAcountDTO;
 import com.infy.banking.exceptions.InfyMeMobileException;
 import com.infy.banking.service.BankAccountDetailsService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -18,7 +20,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.http.HttpClient;
 import java.util.List;
 
 import static com.infy.banking.enums.ExceptionConstants.NO_ACCOUNTS_FOUND;
@@ -66,6 +72,21 @@ public class BankAccountDetailsController {
     public ResponseEntity<String> fundTransfer(@RequestBody TransactionDTO transactionDTO) throws InfyMeMobileException {
         bankAccountDetailsService.fundTransfer(transactionDTO);
         return new ResponseEntity<>("SUCCESSFULLY SAVED",HttpStatus.OK);
-
     }
+    @PostMapping("/accounts")
+    public ResponseEntity<String> createAccount(@RequestBody @Valid BankAccountDTO account) throws MethodArgumentNotValidException {
+        return new ResponseEntity<String>(bankAccountDetailsService.createAccount(account), HttpStatus.OK);
+    }
+
+    @PostMapping("/accounts/{mobileNumber}")
+    public ResponseEntity<String> linkAccount(@RequestBody @Valid LinkingAcountDTO link,@PathVariable Long mobileNumber) throws MethodArgumentNotValidException, InfyMeMobileException {
+        if(link.getOtp()==null) {
+            return new ResponseEntity<String>(bankAccountDetailsService.linkAccount(link, mobileNumber), HttpStatus.OK);
+        }
+        else
+        {
+            return new ResponseEntity<String>(bankAccountDetailsService.linkAccountWithOTP(link, mobileNumber), HttpStatus.OK);
+        }
+    }
+
 }

@@ -1,9 +1,6 @@
 package com.infy.banking.dto;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import lombok.NoArgsConstructor;
 
@@ -14,30 +11,30 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class BankAccountDTO {
 
-    @NotNull(message="Cannot be null")
-    @Min(value=1000000, message="the minimum length should be 7")
+    @Min(value=1000000, message="the minimum length of account number should be 7")
     Long accountNumber;
 
     @NotNull(message="Cannot be null")
-    @Size(min=5, max=15, message="the minimum length should be 5, and the maximum length should be 15")
+    @Size(min=5, max=15, message="the minimum length of bank name should be 5, and the maximum length should be 15")
     String bankName;
 
-    @Min(value=0,message="The minimum value must be 0. Can't be a negative value.")
+    @Min(value=0,message="The minimum value of balance must be 0. Can't be a negative value.")
     Double balance;
 
     @NotNull(message="Cannot be null")
-    @Size(min=1, max=10, message="the minimum length should be 1, and the maximum length should be 10")
+    @Size(min=1, max=10, message="the minimum length of account type should be 1, and the maximum length should be 10")
     String accountType;
 
     @NotNull(message="Cannot be null")
-    @Size(min=1, max=15, message="the minimum length should be 1, and the maximum length should be 15")
+    @Size(min=1, max=15, message="the minimum length of ifsc code should be 1, and the maximum length should be 15")
     String ifscCode;
 
     @Past(message="Must be a past Date")
     Date openingDate;
 
-    @NotNull(message="Cannot be null")
-    @Size(min=10, max=10, message="the minimum length should be 10, and the maximum length should be 10")
+    @NotNull(message="Mobile number cannot be null")
+    @Min(value=1000000000,message="the minimum length of number should be 10, and the maximum length should be 10")
+    @Max(value=9999999999l,message="the minimum length of number should be 10, and the maximum length should be 10")
     Long mobileNumber;
 
     public Long getAccountNumber() {

@@ -16,4 +16,10 @@ public interface DigitalBankAccountRepo  extends JpaRepository<DigitalBankAccoun
 
     @Query(value = "select * from public.digital_bank_account",nativeQuery = true)
     List<DigitalBankAccountEntity> findAllData();
+    @Query(value = "Select digital_banking_id from public.digital_bank_account order by digital_banking_id desc limit 1",nativeQuery = true)
+    public String findLastEntryId();
+
+    @Query(value = "Select digital_banking_id from public.digital_bank_account where account_number=?1 and mobile_number=?2",nativeQuery = true)
+    public String findExists(Long acc, Long num);
 }
+
