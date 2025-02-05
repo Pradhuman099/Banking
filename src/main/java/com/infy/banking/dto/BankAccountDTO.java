@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 
@@ -33,7 +34,7 @@ public class BankAccountDTO {
     String ifscCode;
 
     @Past(message="Must be a past Date")
-    LocalDate openingDate;
+    Date openingDate;
 
     @NotNull(message="Cannot be null")
     @Size(min=10, max=10, message="the minimum length should be 10, and the maximum length should be 10")
@@ -79,11 +80,11 @@ public class BankAccountDTO {
         this.ifscCode = ifscCode;
     }
 
-    public LocalDate getOpeningDate() {
+    public Date getOpeningDate() {
         return openingDate;
     }
 
-    public void setOpeningDate(LocalDate openingDate) {
+    public void setOpeningDate(Date openingDate) {
         this.openingDate = openingDate;
     }
 
@@ -95,7 +96,7 @@ public class BankAccountDTO {
         this.mobileNumber = mobileNumber;
     }
 
-    public BankAccountDTO(Long accountNumber, String bankName, Double balance, String accountType, String ifscCode, LocalDate openingDate, Long mobileNumber) {
+    public BankAccountDTO(Long accountNumber, String bankName, Double balance, String accountType, String ifscCode, Date openingDate, Long mobileNumber) {
         this.accountNumber = accountNumber;
         this.bankName = bankName;
         this.balance = balance;
