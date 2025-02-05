@@ -2,6 +2,7 @@ package com.infy.banking.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -9,6 +10,7 @@ import lombok.Data;
 @Table(name = "digital_bank_account",schema = "public")
 @Data
 public class DigitalBankAccountEntity {
+    @Id
     @Column(name="digital_banking_id")
     String digitalBankingId;
     @Column(name="mobile_number")
